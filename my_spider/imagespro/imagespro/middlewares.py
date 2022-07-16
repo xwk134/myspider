@@ -7,7 +7,13 @@ from scrapy import signals
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
+import random
+class IpProxyDownloadMiddleware(object):
+    PROXIES = ['120.42.46.226:6666']
 
+    def process_request(self, request, spider):
+        proxy = random.choice(self.PROXIES)
+        request.meta['proxy'] = 'http://' + proxy
 
 class ImagesproSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
