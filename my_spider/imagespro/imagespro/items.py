@@ -8,6 +8,5 @@ import scrapy
 
 class ImagesproItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    name = scrapy.Field()
     scr = scrapy.Field()
-    title = scrapy.Field()

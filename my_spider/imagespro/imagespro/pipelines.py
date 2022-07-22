@@ -16,7 +16,7 @@ class MySpiderPipeline(object):
 class ImagesproPipeline(ImagesPipeline):
     # 对图片地址发起请求
     def get_media_requests(self, item, info):
-        print(item['scr'])
+        #print(item['scr'])
         # 此处的dont_filter即为去重的函数，将其设置为True则表示不要去重复的链接进行去重
         yield scrapy.Request(item['scr'], dont_filter=True)
     # 指定图片的存储路径
