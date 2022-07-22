@@ -1,0 +1,22 @@
+from bs4 import BeautifulSoup
+import requests
+# requestsu = requests.get('https://www.bilibili.com/')
+# print(u.text)#打印文本
+# html = u.text
+# soup = BeautifulSoup(html, 'lxml')
+# print("...")
+# for a in soup.find_all(class_='name'):
+#     print('text:', a.string)
+
+headers = {
+    'cookie': '_zap=334aa882-8270-4dd0-ba73-d732f466406b; d_c0="AODerERUqROPTq6A8GRaNV-dMWlBCHZmDzA=|1630561002"; _xsrf=a5Y9SEB0wZevGAwG2PYbgVmauhpZUeen; __snaker__id=2vaTSi4be8KJfJCq; _9755xjdesxxd_=32; YD00517437729195%3AWM_TID=cPXPvnqDP8VABQBQRQI%2Fn4%2BQyQvpIidj; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1645600490,1646050329,1646138223; SESSIONID=XB6T6pvdfVC3DJMSJ7PrfOUVUXQvZJtk4AgaWYZRwlw; JOID=VlAQA0grBuScmfdGYi999U_Yp-Rwf0nXy6iLPQNKXKqq3roHPEQd_PqS9k5ksGLCLweDVpb4c-N8bUlcqHKsWyo=; osd=W1oUAU0mDOCenPpMZi14-EXcpeF9dU3VzqWBOQFPUaCu3L8KNkAf-feY8kxhvWjGLQKOXJL6du52aUtZpXioWS8=; gdxidpyhxdE=OPdNVOYfgxAPDbXlx2TjXR%2FnJa%2FiZ9O8Q7UA0cyEfdETz6gBY0%2BpWlTWb%2Bxv1%5C2efzBY0mXfdoT3aRtBk8fgAVsJIRToinf%2BfhNkm72LYvGZL%2FVtCvptJv%5CAK%5C1Rzhvyiz4neMD3mtcWq%5ClUbdtvA1hJO1QvTGKo5%2B8q3BKD%5CWszPG%5CB%3A1646139123432; YD00517437729195%3AWM_NI=sLbS65hl%2BBGBvNYerjvmagdrulp2SwwnKQyFKJ31N2fRBNq%2FOO0q81qrb8smCKzj8Bwlj1Z3hPSInrHGsy585t09MMNkl7xxuINqF0SSL%2FBbJTylUyeEmppNqcwCHKB0UHg%3D; YD00517437729195%3AWM_NIKE=9ca17ae2e6ffcda170e2e6eed6b825a19486a9bb3aa9b88fb7c44b869b9faab63ebb8bfd82f33db8b3bcaed72af0fea7c3b92ab194aeb4b53facb4e5a3c64ab6929786f162b6b3af88e77ab7b4c0d3d27db5b285b2fc4e8996fdd2cd3aa68e8eaff4258d910092bb3bb3aeaed9f2678195b68bbb4ab5b4a6d2d939ac909daaed7a8c99bd9ab834f7ac00dad0478eb5a4d8fb74b7978292c53c918d84d0c16a8a8cb78dd873a79ba391f346b3bdb9a4cb4182f09ba9e637e2a3; captcha_session_v2="2|1:0|10:1646138226|18:captcha_session_v2|88:NFF2V0hLOXhBWnA4Y2U3N0V2Q0tLdWZ4QTE4eEpOeFFpSXl6OEwrd3dZMDZlOWJnRFRKQjRKdjVWc1pQTXFlVw==|b7da917ce153f175483a2e3f4cc7470983ab6b8391287cdf668d44401992cdee"; captcha_ticket_v2="2|1:0|10:1646138237|17:captcha_ticket_v2|704:eyJ2YWxpZGF0ZSI6IkNOMzFfUGJVb1FZVUstWFpwaXQ0TDZDdXBpak41TEhQMURZUVdzQzR6N2I4LVhpUFpOdy1PWVVGYVFkSXFmQVc5blpXd1FsY1RBSmdaZUZRcy1ORS52VEdQdDFTLnZTc3NERHU0LWFKWk9GMGFjeWxzaEpnbUhtSjZGdnBhYllnZnBBSi5LLlNtV1EtYkRxWkRSRllHRXpzYTU3a0xTeXMwZ3RpTEl6Q2FsSW1aTnRMWm0tZk94amZyS3AyRGVMQWNkUXN5VS10d3U1V19QWldSLkVNRGx0R2MuR2plQVdtU3hMZ1ZRdW1ZVHNPUHlIZVNkS2VWdWM4NVBtYWlWSjJsMTVJei5oMXJMTEhySENoa01JZnpoaTVoZnZFbEFUSnJIYm5Ja3hoRDdXMVVtalFrQ0wxTUJxa053NDIyVm9ic0thdkt1Z3REQ0pYa0FRWFFpQ0R0RUtCa0JBWWNhdXFQNU9MdklrU1J5VXFKdFg3SzZfMjY0Wi5hemJuSDY4QjlKLk52d1RQYU0ycFo0X2lLUDlYRFNXa0wuUVRrd1VxOWdiZ295aW9mY3RFblcuc1lrWmdlTFZrdDlsSzRHQ1BFd085YzQyVVRZeDBma04wbzRTakVxUGs1VmEwY25qaS1IQWlYNWpyZHkuNVBreklpNS1FdnpyY1diSFVBR1RxMyJ9|b75e180eb948f4878ecd9769f45abef538b27396bb4f33c3576a24fdc0dbe4f2"; z_c0="2|1:0|10:1646138237|4:z_c0|92:Mi4xQjA1R0JRQUFBQUFBNE42c1JGU3BFeVlBQUFCZ0FsVk5mV0VMWXdBOUQ2MG5HSF9SNHRGZXlxc1ZBT1Y1YnZMUGRn|2a9dc48a73574ff05c6fa0e614d843baee5164dea386506ce5bc1922a62640fe"; q_c1=f9da168843e4471b841b8510a6a13a7e|1646138237000|1646138237000; NOT_UNREGISTER_WAITING=1; tst=r; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1646138329; KLBRSID=c450def82e5863a200934bb67541d696|1646138330|1646138221',
+    'host': 'www.zhihu.com',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+}
+url = 'https://www.zhihu.com/'
+html = requests.get(url=url, headers=headers)
+soup = BeautifulSoup(html.text, 'lxml')
+print(soup.prettify())
+print("...")
+for a in soup.find_all(target='_blank'):
+    print('text:', a.string)
