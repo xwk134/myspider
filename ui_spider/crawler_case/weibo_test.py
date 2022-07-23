@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
 import os
 import ddddocr
 import time
@@ -29,11 +28,11 @@ for x in range(1):
         dir_name = 'D:\\验证码\\'
         if not os.path.exists(dir_name):
             os.mkdir(dir_name)
-        with open(dir_name + '微博验证码.png', mode='wb') as f:
+        with open(dir_name + 'weibo.png', mode='wb') as f:
             f.write(conet.content)
         time.sleep(1)
         ocr = ddddocr.DdddOcr()
-        with open(dir_name + '微博验证码.png', 'rb') as f:
+        with open(dir_name + 'weibo.png', 'rb') as f:
             img_bytes = f.read()
         res = ocr.classification(img_bytes)
         print('识别出的验证码为：' + res)
