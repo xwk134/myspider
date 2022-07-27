@@ -22,6 +22,7 @@ class MovieSpider(CrawlSpider):
                 yield scrapy.Request(url='http://www.4567kp.com'+url, callback=self.parse_detail)
             else:
                 print("网站中无数据更新，没有可爬取得数据！！！")
+
     def parse_detail(self,response):
         item = MovieproItem()
         item['name'] = response.xpath('//div[@class="stui-content__detail"]/h1/text()').extract_first()
