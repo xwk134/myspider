@@ -7,13 +7,14 @@ import datetime
 
 infolist = []
 infolist1 = []
+infolist2 = []
 def grabOnePage(url):
     print('获取请求地址：', url)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0',
         'Cookie': 'AUTHOR_PROJECT=yidejia; AUTHOR_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4OTJmNjNmMTIzNTM0M2E4YjJiZjZlMmFkN2Y0ZDNhMyIsInN1YiI6IjIwMTkwODQiLCJpc3MiOiJodHRwczpcL1wvb2EuamluZ3podWFuLmNuIiwiYXVkIjoiIiwiaWF0IjoxNjU5MTAzMjc1LCJleHAiOjE2NjE2OTUyNzUsInVzZXJfaWQiOiIyMDE5MDg0Iiwia2V5IjoiY29sbGVnZSJ9.-Oy0VNfaXTzQgHr1kZjV0wBdbNBQsNtsG_IQfTXMg5c'
     }
-    res = requests.get(url=url, headers=headers, timeout=10)
+    res = requests.get(url=url, headers=headers, timeout=20)
     res.encoding = 'gb2312'
     list = json.loads(res.text)
     print(list)
@@ -32,6 +33,7 @@ def grabOnePage(url):
     print(list2)
 
     list22 = []
+    list6 = []
     for x in range(len(list1)):
         list11 = list['data'][x]['child']
         print(list11)
@@ -41,6 +43,16 @@ def grabOnePage(url):
             dict = {
                 'id2': list11[i]['id']  # 二级类目id
             }
+            bb = list11[i]['child']
+            print(bb)
+
+            for b in range(len(bb)):
+                dict = {
+                    'id6': bb[b]['id']  # 三级类目id
+                }
+                list6.append(dict)
+            print(list6)
+
             list22.append(dict)
     print(list22)
 
@@ -61,7 +73,11 @@ def grabOnePage(url):
         for a, b in list22[x - 2].items():
             infolist1.append(b)
 
-
+    row = len(list6)
+    print(f'本次共抓取到{row}条三级类目id')
+    for x in range(2, row + 2):
+        for a, b in list6[x - 2].items():
+            infolist2.append(b)
 
 theadlist = []
 for pageIdx in range(1, 2):
@@ -79,10 +95,9 @@ for thread in theadlist:
 print(theadlist)
 print(infolist)
 print(infolist1)
-listdata = infolist+infolist1
+print(infolist2)
+listdata = infolist+infolist1+infolist2
 print(listdata)
-
-
 
 for x in range(1, 11):
     for y in range(0, len(listdata)):
@@ -92,7 +107,7 @@ for x in range(1, 11):
         }
         url = f'https://xyapi.jingzhuan.cn/api/newxy/public/article/category/id?category_id={listdata[y]}&pageindex={x}&pagesize=10&sort=0&ts=1659173565.736&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4OTJmNjNmMTIzNTM0M2E4YjJiZjZlMmFkN2Y0ZDNhMyIsInN1YiI6IjIwMTkwODQiLCJpc3MiOiJodHRwczpcL1wvb2EuamluZ3podWFuLmNuIiwiYXVkIjoiIiwiaWF0IjoxNjU5MTAzMjc1LCJleHAiOjE2NjE2OTUyNzUsInVzZXJfaWQiOiIyMDE5MDg0Iiwia2V5IjoiY29sbGVnZSJ9.-Oy0VNfaXTzQgHr1kZjV0wBdbNBQsNtsG_IQfTXMg5c&project=yidejia'
         time.sleep(1)
-        res = requests.get(url=url, headers=headers, timeout=10)
+        res = requests.get(url=url, headers=headers, timeout=20)
         res.encoding = 'gb2312'
         list = json.loads(res.text)
         list44 = len(list['data'])
@@ -114,7 +129,7 @@ for x in range(1, 11):
                     id4 = list['data']['data'][a]['id']  # 视频id
                     print(id4)
                     url = f'https://xyapi.jingzhuan.cn/api/newxy/public/article/id?id={id4}&ts=1659315039.32&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4OTJmNjNmMTIzNTM0M2E4YjJiZjZlMmFkN2Y0ZDNhMyIsInN1YiI6IjIwMTkwODQiLCJpc3MiOiJodHRwczpcL1wvb2EuamluZ3podWFuLmNuIiwiYXVkIjoiIiwiaWF0IjoxNjU5MTAzMjc1LCJleHAiOjE2NjE2OTUyNzUsInVzZXJfaWQiOiIyMDE5MDg0Iiwia2V5IjoiY29sbGVnZSJ9.-Oy0VNfaXTzQgHr1kZjV0wBdbNBQsNtsG_IQfTXMg5c&project=yidejia'
-                    res = requests.get(url=url, headers=headers, timeout=10)
+                    res = requests.get(url=url, headers=headers, timeout=20)
                     res.encoding = 'gb2312'
                     list1 = json.loads(res.text)
                     print(list1)

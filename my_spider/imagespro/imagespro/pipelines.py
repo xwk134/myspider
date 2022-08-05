@@ -7,10 +7,13 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from scrapy.pipelines.images import ImagesPipeline
+import pymysql
+#管道可以处理提取的数据，如存数据库
+
 import scrapy
 class MySpiderPipeline(object):
     def process_item(self, item, spider):
-        print(item)
+        #print(item)
         return item
 
 class ImagesproPipeline(ImagesPipeline):
@@ -29,3 +32,22 @@ class ImagesproPipeline(ImagesPipeline):
     # 返回给下一个被执行的管道类
     def item_completed(self, results, item, info):
         return item
+
+
+class mysqlPipeline(object):
+    conn = None
+    def open_spider(self,spider):
+        self.conn = pymysql.Connect(host='192.168.31.222', port=3306, user='root', password='root', database="wx-applets")
+
+    def process_item(self, item, spider):
+        try:
+            self.cursor = self.conn.cursor()
+            sql = "INSERT IGNORE INTO oms_head (url,use_flag,url_type_info) VALUES ('%s', '%s', '%s')" % (item['scr'], 0, item['name'])
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+            self.conn.rollback()
+    def close_spider(self,spider):
+        self.cursor.close()
+        self.conn.close()

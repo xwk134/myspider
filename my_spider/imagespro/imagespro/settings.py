@@ -25,7 +25,7 @@ CONCURRENT_REQUESTS = 1
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -51,9 +51,9 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-   'imagespro.middlewares.IpProxyDownloadMiddleware': 543,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#    'imagespro.middlewares.IpProxyDownloadMiddleware': 543,
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -65,7 +65,8 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'imagespro.pipelines.MySpiderPipeline': 300,
-   'imagespro.pipelines.ImagesproPipeline': 301,
+   # 'imagespro.pipelines.ImagesproPipeline': 301,
+   'imagespro.pipelines.mysqlPipeline': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
