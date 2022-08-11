@@ -11,3 +11,4 @@ PySide2==5.15.2.1
 requests-html==0.10.0
 openpyxl==3.0.9
 pandas==1.4.3
+pyinstaller==5.3

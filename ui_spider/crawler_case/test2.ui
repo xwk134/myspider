@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>bilibili视频采集</string>
+   <string>bilibili视频下载</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton{	
@@ -53,7 +53,7 @@ QTextBrowser{
     </rect>
    </property>
    <property name="text">
-    <string>开始执行</string>
+    <string>开始运行</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
@@ -92,7 +92,7 @@ QTextBrowser{
     </rect>
    </property>
    <property name="text">
-    <string>采集数量：</string>
+    <string>下载数量：</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -261,11 +261,11 @@ QTextBrowser{
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
