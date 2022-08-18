@@ -16,8 +16,3 @@ print(df_obj)
 del df_obj['No2']
 print(df_obj)
 
-
-
-
-
-
