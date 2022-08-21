@@ -1,5 +1,4 @@
 # encoding:utf-8
-
 import time
 import threadpool
 import random
@@ -29,7 +28,7 @@ global_ms = MySignals()
 
 class Stats():
     def __init__(self):
-        qfile_stats = QFile("C:/Users/推广部/Desktop/myspider/ui_spider/crawler_case/test2.ui")
+        qfile_stats = QFile("D:/pycode/myspider/ui_spider/crawler_case/test2.ui")
         qfile_stats.open(QFile.ReadOnly)
         qfile_stats.close()
         self.ui = QUiLoader().load(qfile_stats)
