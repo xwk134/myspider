@@ -5,7 +5,7 @@ from PySide2.QtGui import QIcon
 
 class Stats():
     def __init__(self):
-        qfile_stats = QFile("D:/pycode/myspider/PySide2_test/login.ui")
+        qfile_stats = QFile("E:/myspider/PySide2_test/login.ui")
         qfile_stats.open(QFile.ReadOnly)
         qfile_stats.close()
         self.ui = QUiLoader().load(qfile_stats)

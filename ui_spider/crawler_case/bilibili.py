@@ -17,25 +17,28 @@ from PySide2.QtCore import QFile
 from PySide2.QtGui import QIcon
 from PySide2.QtCore import Signal, QObject
 
+
 # 自定义信号源对象类型，一定要继承自 QObject
 class MySignals(QObject):
-
     # 定义一种信号，两个参数 类型分别是： QTextBrowser 和 字符串
     # 调用 emit方法 发信号时，传入参数 必须是这里指定的 参数类型
     text_print = Signal(QTextBrowser, str)
+
+
 # 实例化
 global_ms = MySignals()
 
+
 class Stats():
     def __init__(self):
-        qfile_stats = QFile("D:/pycode/myspider/ui_spider/crawler_case/test2.ui")
+        qfile_stats = QFile("E:/myspider/ui_spider/crawler_case/test2.ui")
         qfile_stats.open(QFile.ReadOnly)
         qfile_stats.close()
         self.ui = QUiLoader().load(qfile_stats)
         self.ui.pushButton.clicked.connect(self.new_printFunc)
         self.ui.pushButton_2.clicked.connect(self.clear)
-        self.ui.buttonGroup.buttonClicked.connect(self.handle)
-        self.ui.buttonGroup_2.buttonClicked.connect(self.handle1)
+        # self.ui.buttonGroup.buttonClicked.connect(self.handle)
+        # self.ui.buttonGroup_2.buttonClicked.connect(self.handle1)
         # 自定义信号的处理函数
         global_ms.text_print.connect(self.printToGui)
 
@@ -54,8 +57,7 @@ class Stats():
     def clear(self):
         self.ui.textBrowser.clear()
 
-
-    def sayhello(self, url):  #执行方法
+    def sayhello(self, url):  # 执行方法
 
         sleep_seconds = random.randint(2, 5)
         print('线程名称：%s，参数：%s，睡眠时间：%s' % (threading.current_thread().name, url, sleep_seconds))
@@ -88,11 +90,11 @@ class Stats():
         else:
             res = session.post(url=login_url, headers=headers, data=data)
             print('登录失败')
-        print('正在爬取：', threading.current_thread().name+url)
+        print('正在爬取：', threading.current_thread().name + url)
 
         global_ms.text_print.emit(self.ui.textBrowser, f'正在爬取：{url}')
 
-        #self.ui.textBrowser.append(f'正在爬取：{url}')
+        # self.ui.textBrowser.append(f'正在爬取：{url}')
         info = session.get(url=url, headers=headers, timeout=20)
         print(info.status_code)
         if info.status_code == 200:
@@ -103,7 +105,7 @@ class Stats():
         with open('info.html', 'w', encoding='utf-8') as fp:
             fp.write(info.html.html)
         text = info.html.html
-        #print(text)
+        # print(text)
         p1 = re.compile(r'<script>window.__playinfo__=(.*?)</script>', re.S)
         video = re.findall(p1, text)[0]
         txt = json.loads(video)
@@ -111,18 +113,26 @@ class Stats():
         aa = re.compile(r'<script>window.__INITIAL_STATE__=(.*?),"subtitle"', re.S)
 
         bb = re.findall(aa, text)[0]
-        bb1 = bb+'}}'
+        bb1 = bb + '}}'
         print(bb1)
         titlelist = json.loads(bb1)
         print(titlelist)
         num = url.split('=', 1)
-        title = titlelist['videoData']['pages'][int(num[1]) - 1]['part']
-        print('视频标题：', num[1] + '_' + title)
+        try:
+            title = titlelist['videoData']['pages'][int(num[1]) - 1]['part']
+        except:
+            title = titlelist['videoData']['title']
+
+        try:
+            print('视频标题：', num[1] + '_' + title)
+        except:
+            print(title)
+
         title2 = titlelist['videoData']['title']
         title2 = title2.replace('/', '_')
 
         print('课程标题：', title2)
-        #self.ui.textBrowser.append(f'课程标题：{title2}')
+        # self.ui.textBrowser.append(f'课程标题：{title2}')
         global_ms.text_print.emit(self.ui.textBrowser, f'课程标题：{title2}')
         try:
             audio_url = txt['data']['dash']['audio'][0]['backupUrl'][0]
@@ -137,8 +147,6 @@ class Stats():
             video_url = txt['data']['dash']['video'][0]['baseUrl']
             print(video_url)
 
-
-
         video_list = [audio_url, video_url]
         # 保持会话状态，在head中添加键值对:referer，存放上一次的会话的url,所以需要一个新的header
         headers2 = {
@@ -147,11 +155,14 @@ class Stats():
         }
 
         # 下载保存音频和视频两种文件，MP3格式和MP4格式
-        titles = num[1] + '_' + title
+        try:
+            titles = num[1] + '_' + title
+        except:
+            titles = title
 
         titles = titles.replace(' ', '、')
         print('开始下载音频', titles)
-        #self.ui.textBrowser.append(f'开始下载音频：{title}.mp3')
+        # self.ui.textBrowser.append(f'开始下载音频：{title}.mp3')
         global_ms.text_print.emit(self.ui.textBrowser, f'开始下载音频：{titles}.mp3')
 
         r3 = requests.get(url=video_list[0], headers=headers2, timeout=20)
@@ -159,11 +170,11 @@ class Stats():
         with open(titles + '(audio).mp3', mode='wb') as f:
             f.write(audio_data)
         print('音频下载完成', titles)
-        #self.ui.textBrowser.append(f'音频下载完成：{title}.mp3')
+        # self.ui.textBrowser.append(f'音频下载完成：{title}.mp3')
         global_ms.text_print.emit(self.ui.textBrowser, f'音频下载完成：{titles}.mp3')
         print('开始下载视频', titles)
 
-        #self.ui.textBrowser.append(f'开始下载视频：{title}.mp4')
+        # self.ui.textBrowser.append(f'开始下载视频：{title}.mp4')
         global_ms.text_print.emit(self.ui.textBrowser, f'开始下载视频：{titles}.mp4')
         r4 = requests.get(url=video_list[1], headers=headers2, timeout=20)
         video_data = r4.content
@@ -172,7 +183,7 @@ class Stats():
         print('视频下载完成', titles)
         r3.close()
         r4.close()
-        #self.ui.textBrowser.append(f'视频下载成功：{title}.mp4')
+        # self.ui.textBrowser.append(f'视频下载成功：{title}.mp4')
         global_ms.text_print.emit(self.ui.textBrowser, f'视频下载成功：{titles}.mp4')
 
         video = titles + "(video).mp4"
@@ -183,32 +194,33 @@ class Stats():
         if file:
             print('文件下载成功')
 
-
         print('开始合成', titles)
-        #self.ui.textBrowser.append(f'开始合成：{title}.mp4')
+        # self.ui.textBrowser.append(f'开始合成：{title}.mp4')
         global_ms.text_print.emit(self.ui.textBrowser, f'开始合成：{titles}.mp4')
         cmd = f'ffmpeg -i {video} -i {audio} -acodec copy -vcodec copy {titles + ".mp4"}'
         aa = subprocess.call(cmd, shell=True)
         if aa == 0:
             print(aa)
             print('视频合成成功', titles)
-            #self.ui.textBrowser.append(f'视频合成成功：{title}.mp4')
+            # self.ui.textBrowser.append(f'视频合成成功：{title}.mp4')
             global_ms.text_print.emit(self.ui.textBrowser, f'视频合成成功：{titles}.mp4')
             os.remove(video)
             os.remove(audio)
-            self.dir_name = f'D:\\{title2}\\'
+            self.dir_name = f'D:\\B站视频\\{title2}\\'
             # 判断 D盘下是否存在 video目录，如果不存在该目录，则创建 video目录
             if not os.path.exists(self.dir_name):
+                if not os.path.exists("D:\\B站视频"):
+                    os.mkdir("D:\\B站视频")
                 os.mkdir(self.dir_name)
             try:
                 shutil.move(titles + ".mp4", self.dir_name)
                 print('视频移动成功', titles)
-                #self.ui.textBrowser.append(f'视频移动成功：{title}.mp4')
+                # self.ui.textBrowser.append(f'视频移动成功：{title}.mp4')
                 global_ms.text_print.emit(self.ui.textBrowser, f'视频移动成功：{titles}.mp4')
             except:
                 os.remove(titles + ".mp4")
                 print('视频已存在', titles)
-                #self.ui.textBrowser.append(f'视频已存在：{title}.mp4')
+                # self.ui.textBrowser.append(f'视频已存在：{title}.mp4')
                 global_ms.text_print.emit(self.ui.textBrowser, f'视频已存在：{titles}.mp4')
 
         else:
@@ -216,37 +228,42 @@ class Stats():
             # os.remove(audio)
             print(aa)
             print('视频合成失败', titles)
-            #self.ui.textBrowser.append(f'视频合成失败：{title}.mp4')
+            # self.ui.textBrowser.append(f'视频合成失败：{title}.mp4')
             global_ms.text_print.emit(self.ui.textBrowser, f'视频合成失败：{titles}.mp4')
 
-    def task(self):  #主任务
+    def task(self):  # 主任务
         num = self.ui.textEdit.toPlainText()
         one = self.ui.textEdit_2.toPlainText()
         link = self.ui.textEdit_3.toPlainText()
         # number = self.ui.spinBox.value()
-        name_list = []    #总共需要执行线程数
-        for pageIdx in range(1, int(num)+1):
-            url = link+str(pageIdx)
-            name_list.append(url)
-        start_time = time.time()    #开始时间
-        pool = threadpool.ThreadPool(int(one))     #创建线程数
-        #创建请求列表
+        name_list = []  # 总共需要执行线程数
+        for pageIdx in range(1, int(num) + 1):
+            lk = link[-1]
+            if lk == '=':
+                url = link + str(pageIdx)
+                name_list.append(url)
+            else:
+                name_list.append(link)
+        start_time = time.time()  # 开始时间
+        pool = threadpool.ThreadPool(int(one))  # 创建线程数
+        # 创建请求列表
         requests = threadpool.makeRequests(self.sayhello, name_list)
         for req in requests:
-            pool.putRequest(req)    #将每个请求添加到线程池中
-        pool.wait()  #等待线程执行完后再执行主线程
-        print('总共运行时间：%d second' % (time.time()-start_time))
-        #self.ui.textBrowser.append('总共运行时间：%d second' % (time.time()-start_time))
-        global_ms.text_print.emit(self.ui.textBrowser, '总共运行时间：%d second' % (time.time()-start_time))
-        #self.ui.textBrowser.append(f'共采集视频数：{int(num)}')
+            pool.putRequest(req)  # 将每个请求添加到线程池中
+        pool.wait()  # 等待线程执行完后再执行主线程
+        print('总共运行时间：%d 秒' % (time.time() - start_time))
+        # self.ui.textBrowser.append('总共运行时间：%d second' % (time.time()-start_time))
+        global_ms.text_print.emit(self.ui.textBrowser, '总共运行时间：%d 秒' % (time.time() - start_time))
+        # self.ui.textBrowser.append(f'共采集视频数：{int(num)}')
         global_ms.text_print.emit(self.ui.textBrowser, f'共采集视频数：{int(num)}')
-        #self.ui.textBrowser.append(f'视频保存地址：{self.dir_name}')
+        # self.ui.textBrowser.append(f'视频保存地址：{self.dir_name}')
         dirname = self.dir_name
         global_ms.text_print.emit(self.ui.textBrowser, f'视频保存地址：{dirname}')
 
     def new_printFunc(self):  # 新线程入口函数
         self.thread = Thread(target=self.task)
         self.thread.start()
+
 
 # pyinstaller bilibili.py --workpath d:\bilipybuild  --distpath d:\bilipybuild\dist -p D:\Anaconda3\envs\python\Lib\site-packages --add-data="test2.ui;." --noconsole --hidden-import PySide2.QtXml --icon="logo.ico"
 

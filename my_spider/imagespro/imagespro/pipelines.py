@@ -37,12 +37,12 @@ class ImagesproPipeline(ImagesPipeline):
 class mysqlPipeline(object):
     conn = None
     def open_spider(self,spider):
-        self.conn = pymysql.Connect(host='192.168.31.222', port=3306, user='root', password='root', database="wx-applets")
+        self.conn = pymysql.Connect(host='127.0.0.1', port=3306, user='root', password='123456', database="images")
 
     def process_item(self, item, spider):
         try:
             self.cursor = self.conn.cursor()
-            sql = "INSERT IGNORE INTO oms_head (url,use_flag,url_type_info) VALUES ('%s', '%s', '%s')" % (item['scr'], 0, item['name'])
+            sql = "INSERT IGNORE INTO image (url,use_flag,url_type_info) VALUES ('%s', '%s', '%s')" % (item['scr'], 0, item['name'])
             self.cursor.execute(sql)
             self.conn.commit()
         except Exception as e:

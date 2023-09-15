@@ -79,7 +79,7 @@ QTextBrowser{
     </rect>
    </property>
    <property name="text">
-    <string>课程地址：</string>
+    <string>视频地址：</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -161,111 +161,15 @@ QTextBrowser{
     </rect>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioButton">
-   <property name="geometry">
-    <rect>
-     <x>81</x>
-     <y>351</y>
-     <width>47</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>快手</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup</string>
-   </attribute>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_2">
-   <property name="geometry">
-    <rect>
-     <x>134</x>
-     <y>351</y>
-     <width>47</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>抖音</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup</string>
-   </attribute>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_3">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>350</y>
-     <width>89</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>皮皮虾</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup</string>
-   </attribute>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>350</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>唱歌</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup_2</string>
-   </attribute>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>350</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>跳舞</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup_2</string>
-   </attribute>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>450</x>
-     <y>350</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>打篮球</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup_2</string>
-   </attribute>
-  </widget>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
