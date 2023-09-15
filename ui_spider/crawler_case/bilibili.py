@@ -265,7 +265,7 @@ class Stats():
         self.thread.start()
 
 
-# pyinstaller bilibili.py --workpath d:\bilipybuild  --distpath d:\bilipybuild\dist -p D:\Anaconda3\envs\python\Lib\site-packages --add-data="test2.ui;." --noconsole --hidden-import PySide2.QtXml --icon="logo.ico"
+# pyinstaller bilibili.py --workpath d:\bilipybuild  --distpath d:\bilipybuild\dist -p D:\Anaconda3\envs\python\Lib\site-packages --add-data="bilibili.ui;." --noconsole --hidden-import PySide2.QtXml --icon="logo.ico"
 
 # https://www.bilibili.com/video/BV1Yh411o7Sz?p=
 app = QApplication([])
