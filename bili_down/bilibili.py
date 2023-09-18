@@ -306,6 +306,7 @@ class Stats():
             info = session.get(url=url, headers=headers, timeout=20)
             print(info.status_code)
             if info.status_code == 200:
+
                 print('请求成功')
             else:
                 info = session.get(url=url, headers=headers)
