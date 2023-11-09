@@ -16,6 +16,7 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile
 from PySide2.QtGui import QIcon
 from PySide2.QtCore import Signal, QObject
+from PySide2.QtWidgets import QFileDialog
 
 
 # 自定义信号源对象类型，一定要继承自 QObject
@@ -31,20 +32,34 @@ global_ms = MySignals()
 
 class Stats():
     def __init__(self):
+
         qfile_stats = QFile("E:/myspider/ui_spider/crawler_case/test2.ui")
         qfile_stats.open(QFile.ReadOnly)
         qfile_stats.close()
         self.ui = QUiLoader().load(qfile_stats)
         self.ui.pushButton.clicked.connect(self.new_printFunc)
         self.ui.pushButton_2.clicked.connect(self.clear)
-        # self.ui.buttonGroup.buttonClicked.connect(self.handle)
+        self.ui.pushButton_3.clicked.connect(self.QFile)
+        self.ui.buttonGroup.buttonClicked.connect(self.handle)
         # self.ui.buttonGroup_2.buttonClicked.connect(self.handle1)
+
         # 自定义信号的处理函数
         global_ms.text_print.connect(self.printToGui)
 
     def printToGui(self, fb, text):
         fb.append(str(text))
         fb.ensureCursorVisible()
+
+    def QFile(self):
+        filepath, _ = QFileDialog.getOpenFileName(
+            self.ui,  # 父窗口对象
+            "选择你要上传的文本",  # 标题
+            r"d:\\",  # 起始目录
+            "文件类型 (*.txt)"  # 选择类型过滤项，过滤内容在括号中
+        )
+        print("导入文件：", filepath)
+        global_ms.text_print.emit(self.ui.textBrowser, f'{filepath}')
+        return filepath
 
     def handle1(self, item):
         print("选中项的id为：", item.group().checkedId())  # 选中选在 选项组中的id。
@@ -53,6 +68,8 @@ class Stats():
     def handle(self, item):
         print("选中项的id为：", item.group().checkedId())  # 选中选在 选项组中的id。
         print("选中项的名称为：%s\n" % item.text())  # 选中项的文本内容
+        global_ms.text_print.emit(self.ui.textBrowser, f'选中项的名称为：{item.text()}')
+        global_ms.text_print.emit(self.ui.textBrowser, f'选中项的id为：{item.group().checkedId()}')
 
     def clear(self):
         self.ui.textBrowser.clear()
@@ -237,13 +254,63 @@ class Stats():
         link = self.ui.textEdit_3.toPlainText()
         # number = self.ui.spinBox.value()
         name_list = []  # 总共需要执行线程数
-        for pageIdx in range(1, int(num) + 1):
-            lk = link[-1]
-            if lk == '=':
-                url = link + str(pageIdx)
-                name_list.append(url)
+
+        test = self.ui.textBrowser.toPlainText()
+        if test == "":
+            print("请选择下载方式")
+            global_ms.text_print.emit(self.ui.textBrowser, '请选择下载方式')
+
+        print(test[-1])
+
+        if test[-1] == '3':
+            global_ms.text_print.emit(self.ui.textBrowser, '请导入文本链接')
+
+
+        if test[-1] == 't':
+
+            # 导入链接
+            # 读取文本内容
+            # 打开文件
+            a = self.ui.textBrowser.toPlainText()
+            print(a)
+            lst = a.split("\n")
+            fo = open(lst[-1], "r", encoding='utf-8')
+            print("文件名为: ", fo.name)
+
+            for line in fo.readlines():  # 依次读取每行
+                line = line.strip()  # 去掉每行头尾空白
+                print("读取的数据为: %s" % line)
+                url_pattern = re.compile(r'https?://(www\.)?\w+\.\w+(/\w+)*(\?\w+=\w+(&\w+=\w+)*$)?')
+
+                text = line
+
+                match = re.search(url_pattern, text)
+                link = str(match.group()) + '/'
+                if match:
+                    name_list.append(link)
+                    print('找到了URL：', match.group())
+                else:
+                    print('没有找到URL')
+            # 关闭文件
+            fo.close()
+
+            num = len(name_list)
+
+            if len(name_list) > 20:
+                print("视频数量超过20")
+                one = 5
             else:
-                name_list.append(link)
+                one = 2
+
+        else:
+            for pageIdx in range(1, int(num) + 1):
+                lk = link[-1]
+                if lk == '=':
+                    url = link + str(pageIdx)
+                    name_list.append(url)
+                else:
+                    name_list.append(link)
+
         start_time = time.time()  # 开始时间
         pool = threadpool.ThreadPool(int(one))  # 创建线程数
         # 创建请求列表
@@ -265,7 +332,7 @@ class Stats():
         self.thread.start()
 
 
-# pyinstaller bilibili.py --workpath d:\bilipybuild  --distpath d:\bilipybuild\dist -p D:\Anaconda3\envs\python\Lib\site-packages --add-data="bilibili.ui;." --noconsole --hidden-import PySide2.QtXml --icon="logo.ico"
+# pyinstaller bilibili.py --workpath d:\bilipybuild  --distpath d:\bilipybuild\dist -p D:\Anaconda3\envs\python\Lib\site-packages --add-data="test2.ui;." --noconsole --hidden-import PySide2.QtXml --icon="logo.ico"
 
 # https://www.bilibili.com/video/BV1Yh411o7Sz?p=
 app = QApplication([])

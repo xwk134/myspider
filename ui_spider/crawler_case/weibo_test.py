@@ -6,7 +6,7 @@ import requests
 from lxml import etree
 import mysql.connector
 for x in range(1):
-    driver = webdriver.Chrome()
+    driver = webdriver.Edge()
     driver.implicitly_wait(100)
     driver.maximize_window()
     url = 'https://weibo.com/login.php'
