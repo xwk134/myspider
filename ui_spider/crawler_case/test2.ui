@@ -47,7 +47,7 @@ QTextBrowser{
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>20</y>
+     <y>60</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -60,7 +60,7 @@ QTextBrowser{
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>70</y>
+     <y>100</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -165,7 +165,7 @@ QTextBrowser{
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>110</y>
+     <y>20</y>
      <width>71</width>
      <height>31</height>
     </rect>
