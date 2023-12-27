@@ -1,10 +1,11 @@
 import scrapy
+import time
 import json
 from ..items import ImagesproItem
 class ImagesSpider(scrapy.Spider):
     name = 'images'
     allowed_domains = ['www.duitang.com']
-    start_urls = 'https://www.duitang.com/napi/blog/list/by_filter_id/?include_fields=top_comments,is_root,source_link,item,buyable,root_id,status,like_count,sender,album,reply_count&filter_id=头像_女生&start={}&_=1659607037087'
+    start_urls = 'https://www.duitang.com/napi/blog/list/by_filter_id/?include_fields=top_comments,is_root,source_link,item,buyable,root_id,status,like_count,sender,album,reply_count&filter_id=头像_萌宠&start={}&_=1659607037087'
 
     def start_requests(self):
         for i in range(24, 1440, 24):
@@ -23,4 +24,15 @@ class ImagesSpider(scrapy.Spider):
             item['scr'] = data_list['data']['object_list'][x]['photo']['path']
             print(item['scr'])
             item['name'] = data_list['data']['object_list'][x]['album']['name']
+            or_time = int(data_list['data']['object_list'][x]['oriAddDatetime'])
+            # now = int(time.time())
+            times = time.localtime(or_time/1000)
+            strtime = time.strftime("%Y-%m-%d %H:%M:%S", times)
+            print(strtime)
+            item['or_time'] = strtime
+            millis = int(round(time.time() * 1000))
+            print(millis, or_time)
+            if (millis-or_time > 60*60*24*30*3*1000):
+                print("采集近三个月内数据完成")
+                break
             yield item
