@@ -15,7 +15,7 @@ class ImagesSpider(scrapy.Spider):
                 "prodCatid": prodCatids[x],
             }
 
-            #这里利用了一个回调机制，即callback, 回调的对象是parse
+            # 这里利用了一个回调机制，即callback, 回调的对象是parse
             yield scrapy.FormRequest(url=self.start_urls, formdata=formdata, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
