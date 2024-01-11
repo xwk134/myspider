@@ -38,9 +38,17 @@ DOWNLOAD_DELAY = 3
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-  'Accept-Language': 'en',
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.30',
+  # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  # 'Accept': '*/*',
+  # 'Accept-Language': 'en',
+  # 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.30',
+
+   #'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+   #'Accept': '*/*',
+   #'Host': 'www.xinfadi.com.cn',
+   #'Connection': 'keep-alive',
+   #'Content-Type': 'application/json'
 }
 
 # Enable or disable spider middlewares
@@ -66,7 +74,7 @@ DEFAULT_REQUEST_HEADERS = {
 ITEM_PIPELINES = {
    'imagespro.pipelines.MySpiderPipeline': 300,
    # 'imagespro.pipelines.ImagesproPipeline': 301,
-   'imagespro.pipelines.mysqlPipeline': 302,
+   # 'imagespro.pipelines.mysqlPipeline': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

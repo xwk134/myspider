@@ -32,7 +32,7 @@ class ImagesSpider(scrapy.Spider):
             item['or_time'] = strtime
             millis = int(round(time.time() * 1000))
             print(millis, or_time)
-            if (millis-or_time > 60*60*24*30*3*1000):
-                print("采集近三个月内数据完成")
+            if (millis-or_time > 60*60*24*30*1*1000):
+                print("采集近1个月内数据完成")
                 break
             yield item

@@ -38,7 +38,7 @@ class ImagesproPipeline(ImagesPipeline):
 class mysqlPipeline(object):
     conn = None
     def open_spider(self,spider):
-        self.conn = pymysql.Connect(host='47.100.186.122', port=3306, user='root', password='meixi123', database="gvb_db")
+        self.conn = pymysql.Connect(host='114.132.87.56', port=3306, user='root', password='meixi123', database="gvb_db")
 
     def process_item(self, item, spider):
         try:
