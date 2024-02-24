@@ -65,7 +65,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    # 'imagespro.pipelines.MySpiderPipeline': 300,
-   # 'imagespro.pipelines.ImagesproPipeline': 301,
+   'imagespro.pipelines.ImagesproPipeline': 301,
    'imagespro.pipelines.mysqlPipeline': 302,
 }
 

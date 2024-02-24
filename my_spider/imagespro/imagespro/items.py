@@ -11,3 +11,4 @@ class ImagesproItem(scrapy.Item):
     name = scrapy.Field()
     scr = scrapy.Field()
     or_time = scrapy.Field()
+    tag = scrapy.Field()

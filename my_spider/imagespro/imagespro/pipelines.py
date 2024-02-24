@@ -43,8 +43,8 @@ class mysqlPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor = self.conn.cursor()
-
-            sql = "INSERT IGNORE INTO banner_models (created_at,updated_at,path,name,image_type,tag) VALUES ('%s', '%s', '%s','%s', '%s', '%s')" % (item['or_time'], item['or_time'], item['scr'], item['name'], 3, "萌宠")
+            print(item['tag'])
+            sql = "INSERT IGNORE INTO banner_models (created_at,updated_at,path,name,image_type,tag) VALUES ('%s', '%s', '%s','%s', '%s', '%s')" % (item['or_time'], item['or_time'], item['scr'], item['name'], 3, item['tag'])
             self.cursor.execute(sql)
             self.conn.commit()
         except Exception as e:
