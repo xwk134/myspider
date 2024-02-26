@@ -57,4 +57,3 @@ class ImagesSpider(scrapy.Spider):
 
                 break
             yield item
-
