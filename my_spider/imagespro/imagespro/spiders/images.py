@@ -17,7 +17,6 @@ class ImagesSpider(scrapy.Spider):
             # print(j)
             url = start_urls[j].format(i)
             urls.append(url)
-
     print(urls)
 
     def start_requests(self):
