@@ -17,6 +17,7 @@ from PySide2.QtCore import QFile
 from PySide2.QtGui import QIcon
 from PySide2.QtCore import Signal, QObject
 from PySide2.QtWidgets import QFileDialog
+from moviepy.editor import *
 
 
 # 自定义信号源对象类型，一定要继承自 QObject
@@ -33,7 +34,7 @@ global_ms = MySignals()
 class Stats():
     def __init__(self):
 
-        qfile_stats = QFile("E:/myspider/ui_spider/crawler_case/test2.ui")
+        qfile_stats = QFile("D:/pycode/myspider/ui_spider/crawler_case/test2.ui")
         qfile_stats.open(QFile.ReadOnly)
         qfile_stats.close()
         self.ui = QUiLoader().load(qfile_stats)
@@ -221,24 +222,64 @@ class Stats():
             print('视频合成成功', titles)
             # self.ui.textBrowser.append(f'视频合成成功：{title}.mp4')
             global_ms.text_print.emit(self.ui.textBrowser, f'视频合成成功：{titles}.mp4')
+            time.sleep(1)
             os.remove(video)
             os.remove(audio)
-            self.dir_name = f'D:\\B站视频\\{title2}\\'
-            # 判断 D盘下是否存在 video目录，如果不存在该目录，则创建 video目录
-            if not os.path.exists(self.dir_name):
-                if not os.path.exists("D:\\B站视频"):
-                    os.mkdir("D:\\B站视频")
-                os.mkdir(self.dir_name)
+            time.sleep(1)
+
+
             try:
-                shutil.move(titles + ".mp4", self.dir_name)
-                print('视频移动成功', titles)
-                # self.ui.textBrowser.append(f'视频移动成功：{title}.mp4')
-                global_ms.text_print.emit(self.ui.textBrowser, f'视频移动成功：{titles}.mp4')
+
+                self.dir_name = f'D:\\B站视频\\{title2}\\'
+                # 判断 D盘下是否存在 video目录，如果不存在该目录，则创建 video目录
+                if not os.path.exists(self.dir_name):
+                    if not os.path.exists("D:\\B站视频"):
+                        os.mkdir("D:\\B站视频")
+                    os.mkdir(self.dir_name)
+
+
+                    shutil.move(titles + ".mp4", self.dir_name)
+                    print('视频移动成功', titles)
+                    # self.ui.textBrowser.append(f'视频移动成功：{title}.mp4')
+                    global_ms.text_print.emit(self.ui.textBrowser, f'视频移动成功：{titles}.mp4')
+                    try:
+
+                        video_path = f'D:\\B站视频\\{title2}\\{titles}.mp4'
+
+                        video_clip0 = VideoFileClip(video_path)
+
+                        # 定义剪辑的起始和结束时间（以秒为单位）
+                        start_time = 5
+                        end_time = 20
+
+                        # 对视频进行剪辑
+                        clipped_video = video_clip0.subclip(start_time, end_time)
+
+                        new_video = clipped_video.crop(x1=10, y1=50, x2=500, y2=940)
+                        titles = titles + '-已剪辑'
+                        video_path_1 = f'D:\\B站视频\\{title2}\\{titles}.mp4'
+                        try:
+                            new_video.write_videofile(video_path_1, audio=True)
+                            global_ms.text_print.emit(self.ui.textBrowser, f'视频裁剪成功：{titles}.mp4')
+                            print("裁剪并导出成功！")
+                        except Exception as e:
+                            print(f"裁剪或导出失败：{e}")
+
+
+                    except Exception as e:
+
+                        print(f"剪辑失败：{e}")
             except:
                 os.remove(titles + ".mp4")
                 print('视频已存在', titles)
                 # self.ui.textBrowser.append(f'视频已存在：{title}.mp4')
                 global_ms.text_print.emit(self.ui.textBrowser, f'视频已存在：{titles}.mp4')
+
+
+
+            print('视频裁剪中', titles)
+            global_ms.text_print.emit(self.ui.textBrowser, f'视频裁剪中：{titles}.mp4')
+
 
         else:
             # os.remove(video)
@@ -264,6 +305,14 @@ class Stats():
 
         if test[-1] == '3':
             global_ms.text_print.emit(self.ui.textBrowser, '请导入文本链接')
+
+        if test[-1] == '4':
+            global_ms.text_print.emit(self.ui.textBrowser, '下载视频选集,示例：https://www.bilibili.com/video/BV1Yh411o7Sz?p=')
+
+        if test[-1] == '5':
+            global_ms.text_print.emit(self.ui.textBrowser, '下载主页视频,示例：https://space.bilibili.com/3493297601382968/video')
+        if test[-1] == '6':
+            global_ms.text_print.emit(self.ui.textBrowser, '裁剪视频')
 
 
         if test[-1] == 't':

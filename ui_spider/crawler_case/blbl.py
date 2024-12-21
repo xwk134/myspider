@@ -15,7 +15,7 @@ current_datetime = datetime.datetime.now()
 current_year = current_datetime.year
 
 for x in range(1):
-    driver = webdriver.Edge()
+    driver = webdriver.Firefox()
     driver.implicitly_wait(100)
     driver.maximize_window()
     url = 'https://www.bilibili.com/v/animal/cat/?spm_id_from=333.1007.0.0'

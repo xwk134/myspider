@@ -177,7 +177,7 @@ QTextBrowser{
   <widget class="QRadioButton" name="radioButton">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>40</x>
      <y>350</y>
      <width>89</width>
      <height>16</height>
@@ -193,7 +193,7 @@ QTextBrowser{
   <widget class="QRadioButton" name="radioButton_2">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>140</x>
      <y>350</y>
      <width>89</width>
      <height>16</height>
@@ -201,6 +201,54 @@ QTextBrowser{
    </property>
    <property name="text">
     <string>文本读取</string>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_3">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>350</y>
+     <width>89</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>视频选集</string>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_4">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>350</y>
+     <width>89</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>主页视频</string>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_5">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>350</y>
+     <width>89</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>裁剪视频</string>
    </property>
    <attribute name="buttonGroup">
     <string notr="true">buttonGroup</string>
